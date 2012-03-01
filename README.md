@@ -18,3 +18,10 @@ To see a complete list of available tasks, run "`gradlew tasks`".
 
 To create project files for IntelliJ IDEA, specify that as the Gradle task.
 (i.e., "`gradlew idea`")
+
+
+# Resources #
+
+* [Create a scripting DSL](http://mrhaki.blogspot.com/2011/11/groovy-goodness-create-our-own-script.html)
+* [Using the Magic Package for automatic MetaClasses](http://mrhaki.blogspot.com/2011/11/groovy-goodness-magic-package-to-add.html)
+* [Transforming a Reader to a Writer](http://mrhaki.blogspot.com/2011/05/groovy-goodness-transforming-reader.html)
