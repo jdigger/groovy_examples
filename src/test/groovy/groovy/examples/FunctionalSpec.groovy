@@ -191,7 +191,7 @@ class FunctionalSpec extends Specification {
         def person1 = new Person('Arturo', 26)
         def person2 = new Person('Luis', 61)
         def person3 = new Person('Laura', 19)
-        def family = [] << person1 << person2 << person3
+        List<Person> family = [person1, person2, person3]
 
         then:
         family.max {it.age}.name == 'Luis' // iterates over list looking for max as defined and returns that object
@@ -219,6 +219,13 @@ class FunctionalSpec extends Specification {
 
         and: 'functional using "any"'
         family.any {it.age > 60}
+
+        //
+        // groupBy
+        //
+
+        and:
+        family.groupBy {it.name[0].toLowerCase()} == ['a': [person1], 'l': [person2, person3]]
     }
 
 }
