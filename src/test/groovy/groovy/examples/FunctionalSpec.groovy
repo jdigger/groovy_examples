@@ -164,6 +164,8 @@ class FunctionalSpec extends Specification {
         expect: 'functional style'
         numbers.inject(0) {accumulator, n -> accumulator + n} == 10
 
+        ['J', 'i', 'm'].inject('') {a, c -> a + c} == 'Jim'
+
         //
         // find first matching value
         //

@@ -39,6 +39,7 @@ class ImplicitMethodSpec extends Specification {
     def 'implicit method with paren'() {
         expect:
         new Incrementer()(2) == 3
+        new Incrementer().call(2) == 3
     }
 
 

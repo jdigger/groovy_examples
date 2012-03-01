@@ -8,6 +8,7 @@ import spock.lang.Stepwise
  */
 @Stepwise
 @Mixin(MetaClassMixin)
+@SuppressWarnings("GroovyAssignabilityCheck")
 class MetaClassMagicSpec extends Specification {
 
     def cleanup() {
@@ -73,6 +74,20 @@ class MetaClassMagicSpec extends Specification {
 
         then:
         thrown(MissingMethodException)
+    }
+
+    static class F {
+        static m1(String str) {
+            '(' + str + ')'
+        }
+    }
+
+
+    def 'Category'() {
+        expect:
+        use(F) {
+            "Here I am".m1() == "(Here I am)"
+        }
     }
 
 }
