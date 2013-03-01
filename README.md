@@ -22,6 +22,7 @@ To create project files for IntelliJ IDEA, specify that as the Gradle task.
 
 # Resources #
 
+* [Hubert A. Klein Ikkink (mrhaki) Blog](http://mrhaki.blogspot.com/search/label/Groovy): Pure awesomeness
 * [Create a scripting DSL](http://mrhaki.blogspot.com/2011/11/groovy-goodness-create-our-own-script.html)
 * [Using the Magic Package for automatic MetaClasses](http://mrhaki.blogspot.com/2011/11/groovy-goodness-magic-package-to-add.html)
 * [Transforming a Reader to a Writer](http://mrhaki.blogspot.com/2011/05/groovy-goodness-transforming-reader.html)
@@ -33,3 +34,4 @@ To create project files for IntelliJ IDEA, specify that as the Gradle task.
 * [Build](http://mrhaki.blogspot.com/2011/04/groovy-goodness-build-json-with.html) and [Parse](http://mrhaki.blogspot.com/2011/04/groovy-goodness-parse-json-with.html) JSON
 * [CodeNarc](http://mrhaki.blogspot.com/2011/01/groovy-goodness-create-codenarc-reports.html) and [GMetrics](http://mrhaki.blogspot.com/2011/01/groovy-goodness-create-gmetrics-report.html) reports with XSLT
 * [Using GroovyWS for SOAP](http://mrhaki.blogspot.com/2010/11/groovy-goodness-use-groovyws-to-access_15.html)
+* [GContracts: Programming by Contract](https://github.com/andresteingress/gcontracts/wiki)

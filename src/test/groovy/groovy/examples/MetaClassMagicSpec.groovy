@@ -8,7 +8,7 @@ import spock.lang.Stepwise
  */
 @Stepwise
 @Mixin(MetaClassMixin)
-@SuppressWarnings("GroovyAssignabilityCheck")
+@SuppressWarnings(["GroovyAssignabilityCheck", "GroovyUntypedAccess"])
 class MetaClassMagicSpec extends Specification {
 
     def cleanup() {
@@ -25,6 +25,7 @@ class MetaClassMagicSpec extends Specification {
         /**
          * the "implicit method"
          */
+
         def call(Closure closure) {
             closure.delegate = this
             closure.call()
@@ -49,6 +50,7 @@ class MetaClassMagicSpec extends Specification {
     }
 
 
+    @SuppressWarnings("GroovyUnresolvedAccess")
     def "change meta class"() {
         given:
         metaClassFor(String) {
@@ -68,6 +70,7 @@ class MetaClassMagicSpec extends Specification {
     }
 
 
+    @SuppressWarnings("GroovyUnresolvedAccess")
     def "check that metaClass was reverted"() {
         when:
         'Yeah man!' == String.groovy()
@@ -75,6 +78,7 @@ class MetaClassMagicSpec extends Specification {
         then:
         thrown(MissingMethodException)
     }
+
 
     static class F {
         static m1(String str) {

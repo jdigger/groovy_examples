@@ -1,13 +1,15 @@
 package groovy.examples
 
+import org.codehaus.groovy.runtime.typehandling.GroovyCastException
+import spock.lang.Specification
+
 import java.awt.Point
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
-import spock.lang.Specification
 
-@SuppressWarnings(["GroovyLabeledStatement", "GroovyUnusedAssignment", "GroovyAccessibility", "GroovyVariableNotAssigned"])
+@SuppressWarnings(["GroovyLabeledStatement", "GroovyUnusedAssignment", "GroovyAccessibility", "GroovyVariableNotAssigned", "GroovyUntypedAccess", "GroovyUnresolvedAccess", "GrFieldAlreadyDefined"])
 class ClosureSpec extends Specification {
 
     def 'closure definitions'() {
@@ -22,6 +24,7 @@ class ClosureSpec extends Specification {
     }
 
 
+    @SuppressWarnings("GroovyAssignabilityCheck")
     def 'bad closure definitions'(Object[] args, Closure closure) {
         when:
         closure.call(* args)  // "spread" the array across the parameters
@@ -89,6 +92,7 @@ class ClosureSpec extends Specification {
     }
 
 
+    @SuppressWarnings("GrFieldAlreadyDefined")
     static class B {
         def x = 'B'
         Closure d = {x -> owner.x + delegate.x + this.x + x}
@@ -96,6 +100,7 @@ class ClosureSpec extends Specification {
         Closure s = {x + y}
 
         private String name = 'bName'
+
 
         def getClosure(argName) {
             { name -> "${name} - ${owner.name} - ${argName}"}
@@ -180,6 +185,7 @@ class ClosureSpec extends Specification {
             c.call()
         }
 
+
         def binary(a, b, Closure c) {
             c.call(a, b)
         }
@@ -232,6 +238,7 @@ class ClosureSpec extends Specification {
     }
 
 
+    @SuppressWarnings("GroovyBusyWait")
     static void waitFor(Future future) {
         while (!future.done) {
             Thread.sleep(50)
@@ -249,6 +256,7 @@ class ClosureSpec extends Specification {
     }
 
 
+    @SuppressWarnings(["GroovyResultOfAssignmentUsed", "GroovyListGetCanBeKeyedAccess"])
     def 'as multi-method interface'() {
         given:
         boolean addCalled = false
@@ -270,12 +278,14 @@ class ClosureSpec extends Specification {
             // don't care; just need to make sure there's no no-arg constructor
         }
 
+
         def m1() {
             1
         }
     }
 
 
+    @SuppressWarnings(["GroovyResultOfAssignmentUsed", "GroovyAssignabilityCheck"])
     def 'as multi-method class'() {
         given:
         boolean addCalled = false
@@ -297,7 +307,7 @@ class ClosureSpec extends Specification {
         D d = [m1: {-> 2}] as D
 
         then:
-        thrown(ArrayIndexOutOfBoundsException) // confusing error; caused because there's no no-arg constructor
+        thrown(GroovyCastException) // caused because there's no no-arg constructor
     }
 
 }
