@@ -49,7 +49,7 @@ class CoffeeSpec extends Specification {
     }
 
 
-    def 'coffee DSL using with{}'() {
+    def 'coffee DSL using with {}'() {
         when:
         def coffee = new Coffee().with {
             triple grande nonfat caramel_macchiato
@@ -60,8 +60,8 @@ class CoffeeSpec extends Specification {
     }
 
 
-    @Unroll({"coffee DSL using '${message}'"})
-    def 'coffee DSL using with{Closure}'(String message, Closure block) {
+    @Unroll
+    def "coffee DSL using #message'"() {
         when:
         def coffee = new Coffee().with(block)
 
