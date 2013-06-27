@@ -1,6 +1,8 @@
 package groovy.examples
 
 import groovy.transform.CompileStatic
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import spock.lang.Specification
 
 import static java.util.Calendar.DAY_OF_MONTH
@@ -13,6 +15,7 @@ import static java.util.Calendar.SECOND
 import static java.util.Calendar.YEAR
 import static java.util.Calendar.ZONE_OFFSET
 
+@SuppressWarnings("GrMethodMayBeStatic")
 class ClassSpec extends Specification {
 
     def 'simple implicit typing'() {
@@ -56,6 +59,66 @@ class ClassSpec extends Specification {
         calendar1 == calendar2
     }
 
+    @ToString
+    @EqualsAndHashCode
+    static class Person {
+        String firstName
+        String lastName
+
+        Person() {}
+
+        Person(String fn, String ln) {
+            this.firstName = fn
+            this.lastName = ln
+        }
+
+        static Person createPersonProperties(String fn, String ln) {
+            new Person(firstName: fn, lastName: ln)
+            // identical to:
+            //   Person person = new Person()
+            //   person.setFirstName(fn)
+            //   person.setLastName(ln)
+        }
+
+        static Person createPersonMapProperties(String fn, String ln) {
+            new Person([firstName: fn, lastName: ln])
+            // identical to the "normal" constructor-properties form; the compiler
+            //   optimizes out the Map
+        }
+
+
+        static Person createPersonMapProperties(Map props) {
+            new Person(props)
+            // functionally the same as the "normal" constructor-properties form, however the
+            //   compiler does not have the opportunity to optimize out the property calls
+            // This is NOT allowed when using @CompileStatic in Groovy 2.1
+        }
+
+        static Person createPersonListParams(String fn, String ln) {
+            [fn, ln] as Person  // i.e., [fn, ln].asType(Person)
+            // functionally the same as `new Person(fn, ln)`
+        }
+
+        static Person createPersonListImplicit(String fn, String ln) {
+            [fn, ln]
+            // the left-hand-side (in this case, what the method returns), does an
+            //   implicit coercion like the 'as Person' does.
+            // functionally the same as `new Person(fn, ln)`
+        }
+    }
+
+
+    def 'default constructors'() {
+        final person = new Person('Jim', 'Moore')
+
+        expect:
+        person == Person.createPersonProperties('Jim', 'Moore')
+        person == Person.createPersonMapProperties('Jim', 'Moore')
+        person == Person.createPersonMapProperties([firstName: 'Jim', lastName: 'Moore'])
+        person == Person.createPersonListParams('Jim', 'Moore')
+        person == Person.createPersonListImplicit('Jim', 'Moore')
+    }
+
     // **********************************************************************
     //
     // Multimethods / Multiple Dispatch
@@ -69,6 +132,7 @@ class ClassSpec extends Specification {
     }
 
     @CompileStatic
+    @SuppressWarnings(["GroovyUnusedDeclaration", "GroovyUnusedDeclaration"])
     static class Dispatcher {
         String getValue(A a) {
             'A'
