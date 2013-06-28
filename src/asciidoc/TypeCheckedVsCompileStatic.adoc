@@ -57,7 +57,7 @@ This has a few significant implications:
 
 * GOOD
   ** It can result in *significant* performance improvements (especially in pre-Java 7 environments) because
-     "dynamic Groovy" uses a *lot* of reflection and indirection.
+     ``dynamic Groovy'' uses a *lot* of reflection and indirection.
   ** It essentially gives you Java's performance and call semantics with Groovy's syntactic niceness, richer
      libraries, etc.
   ** A class with this annotation still implements GroovyObject, so it continues to have its associated capabilities,
@@ -71,7 +71,7 @@ This has a few significant implications:
      make a lot of assumptions because Groovy was designed to be dynamic, causing some mismatches in expected behavior.
 
 Unlike @TypeChecked, @CompileStatic can be applied to pretty much anything, including an entire package. It acts as
-a "superset" of @TypeChecked, so if you have a very broad application of @CompileStatic, you need to explicitly turn
+a ``superset'' of @TypeChecked, so if you have a very broad application of @CompileStatic, you need to explicitly turn
 it off in order to selectively enable @TypeChecked.
 
 [source,groovy]
@@ -90,18 +90,18 @@ Ideally, if you are not using static type checking of some kind, mark the class/
 
 Some of the times when you can not do so:
 
-* When using one of the "builders" (e.g., http://groovy.codehaus.org/gapi/groovy/json/JsonBuilder.html[JsonBuilder])
+* When using one of the ``builders'' (e.g., http://groovy.codehaus.org/gapi/groovy/json/JsonBuilder.html[JsonBuilder])
 * When using a dynamic integration library (e.g., https://github.com/jwagenleitner/groovy-wslite[Groovy-WSLite])
 * Some DSLs
   ** Fortunately, http://mrhaki.blogspot.com/2013/05/groovy-goodness-delegatesto-for-type.html[@DelegatesTo] reduces
      the need for this.
 * ...?
 
-When all you're doing is essentially "Java with a much nicer syntax", @CompileStatic is a great choice. You then
+When all you're doing is essentially ``Java with a much nicer syntax'', @CompileStatic is a great choice. You then
 have both Java's type safety and its performance. Since @CompileStatic even works for most uses of closures,
 you even get pretty much all of what Java 8 is promising, long before it's generally available.
 
-As a general rule, though, it's usually best to "let Groovy be Groovy" and use the @TypeChecked. That way all the
+As a general rule, though, it's usually best to ``let Groovy be Groovy'' and use the @TypeChecked. That way all the
 runtime semantics of Groovy remain the same. There is a performance cost to that (compared to @CompileStatic) but
 it is generally relatively minor, and getting much better over time. (Java 7, in particular, makes things much better
-because of it's "invokedynamic" bytecode support.)
+because of it's ``invokedynamic'' bytecode support.)
