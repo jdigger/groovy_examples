@@ -80,9 +80,6 @@ def typeCheckedMethod() {
 
 === General Recommendations
 
-[NOTE]
-====
-Unless there is a very good reason not to, *ALWAYS* use one of these two annotations.
-====
+IMPORTANT: Unless there is a very good reason not to, *ALWAYS* use one of these two annotations.
 
 http://mrhaki.blogspot.com/2013/05/groovy-goodness-delegatesto-for-type.html
