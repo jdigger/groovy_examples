@@ -1,0 +1,25 @@
+== @TypeChecked vs @CompileStatic
+
+=== What They Do
+
+==== @TypeChecked
+
+This tells to Groovy compiler to do the same kind of type checking that the Java compiler does.
+
+In other words, it makes
+
+[source,groovy]
+----
+final aValue = 'This is a value'
+Number num = aValue   // Compiler error
+println "Does not work; compiler error: ${aValu}"
+
+include::../test/groovy/groovy/examples/ClassSpec.groovy[tags=PersonClass]
+----
+
+
+==== @CompileStatic
+
+
+=== General Recommendations
+

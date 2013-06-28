@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+        mavenRepo name: 'Bintray Asciidoctor repo', url: 'http://dl.bintray.com/content/aalmiray/asciidoctor'
+        mavenRepo name: 'Bintray JCenter', url: 'http://jcenter.bintray.com'
+    }
+
+    dependencies {
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.4.1'
+    }
+}
+
+apply plugin: 'asciidoctor'
+
 repositories {
     mavenCentral()
 }
@@ -17,26 +30,7 @@ dependencies {
 }
 
 dependencies {
-    groovy "org.codehaus.groovy:groovy:${groovy_version}", {
-        exclude group: 'asm', module: 'asm-commons'
-        exclude group: 'asm', module: 'asm-tree'
-        exclude group: 'asm', module: 'asm-util'
-        exclude group: 'asm', module: 'asm-analysis'
-    }
+    groovy "org.codehaus.groovy:groovy-all:${groovy_version}"
 
-    testCompile "org.spockframework:spock-core:${spock_version}", {
-        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
-    }
-}
-
-
-// **************************************************************************
-//
-// GRADLE WRAPPER CREATION
-//
-// **************************************************************************
-
-task wrapper(type: Wrapper, group: 'Other', description: 'Creates the Gradle wrapper') {
-    gradleVersion = '1.0-milestone-8'
-    jarFile = '.gradle-wrapper/gradle-wrapper.jar'
+    testCompile "org.spockframework:spock-core:${spock_version}"
 }

@@ -61,6 +61,7 @@ class ClassSpec extends Specification {
 
     @ToString
     @EqualsAndHashCode
+    // tag::PersonClass[]
     static class Person {
         String firstName
         String lastName
@@ -106,6 +107,7 @@ class ClassSpec extends Specification {
             // functionally the same as `new Person(fn, ln)`
         }
     }
+    // end::PersonClass[]
 
 
     def 'default constructors'() {
