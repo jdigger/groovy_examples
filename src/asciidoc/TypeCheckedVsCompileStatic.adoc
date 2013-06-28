@@ -80,4 +80,9 @@ def typeCheckedMethod() {
 
 === General Recommendations
 
-It is possible to mix and match
+[NOTE]
+====
+Unless there is a very good reason not to, *ALWAYS* use one of these two annotations.
+====
+
+http://mrhaki.blogspot.com/2013/05/groovy-goodness-delegatesto-for-type.html
