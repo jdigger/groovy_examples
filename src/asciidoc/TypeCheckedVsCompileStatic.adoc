@@ -89,6 +89,7 @@ Ideally, if you are not using static type checking of some kind, mark the class/
 @TypeChecked(TypeCheckingMode.SKIP) to make it clear that it wasn't just an oversight.
 
 Some of the times when you can not do so:
+
 * When using one of the "builders" (e.g., http://groovy.codehaus.org/gapi/groovy/json/JsonBuilder.html[JsonBuilder])
 * When using a dynamic integration library (e.g., https://github.com/jwagenleitner/groovy-wslite[Groovy-WSLite])
 * Some DSLs
