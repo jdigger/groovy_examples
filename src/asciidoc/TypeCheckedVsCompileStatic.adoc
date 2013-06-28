@@ -19,8 +19,9 @@ As long as you aren't doing things that require `methodMissing` or the like (e.g
 wonderfulness of Groovy *and* compiler type safety.
 
 This makes *NO* difference in the resulting bytecode compared to not using the annotation. The semantics of
-how Groovy works (including dynamic method dispatch) work exactly the same as "unadorned" Groovy code. This
-simply asks the compiler to tell you when you make a mistake that the type system can catch.
+how Groovy works (including http://mrhaki.blogspot.com/2009/09/groovy-goodness-multimethods-or.html[dynamic method
+dispatch]) work exactly the same as "unadorned" Groovy code. This simply asks the compiler to tell you when you
+make a mistake that the type system can catch.
 
 The annotation can be applied to an entire class or a specific method (or constructor). If it is enabled for an
 entire class, it can be selectively disabled at the method level by annotation the method and passing
@@ -43,6 +44,60 @@ class MyClass {
 
 ==== @CompileStatic
 
+This tells the Groovy compiler act much more like the Java compiler.
+
+In other words, in addition to doing static type checking, it also does static binding.
+
+This has a few significant implications:
+
+* GOOD
+  ** It can result in *significant* performance improvements (especially in pre-Java 7 environments) because
+     "dynamic Groovy" uses a *lot* of reflection and indirection.
+  ** It essentially gives you Java's performance and call semantics with Groovy's syntactic niceness, richer
+     libraries, etc.
+  ** A class with this annotation still implements GroovyObject, so it continues to have its associated capabilities,
+     including the ability to have a `methodMissing`.
+
+* BAD
+  ** This can change the semantics of your Groovy code, particularly because you give up
+     http://mrhaki.blogspot.com/2009/09/groovy-goodness-multimethods-or.html[multimethods].
+  ** There are bugs and gotchas in the static compiler. It's a relatively new addition (since 2.0) and it has to
+     make a lot of assumptions because Groovy was designed to be dynamic, causing some mismatches in expected behavior.
+
+It is possible to mix and match
+
+[source,groovy]
+----
+final aValue = 'This is a value'
+Number num = aValue   // Compiler error
+println "Does not work; compiler error: ${aValu}"
+----
+
+As long as you aren't doing things that require `methodMissing` or the like (e.g., builders), you get all the
+wonderfulness of Groovy *and* compiler type safety.
+
+This makes *NO* difference in the resulting bytecode compared to not using the annotation. The semantics of
+how Groovy works (including dynamic method dispatch) work exactly the same as "unadorned" Groovy code. This
+simply asks the compiler to tell you when you make a mistake that the type system can catch.
+
+The annotation can be applied to an entire class or a specific method (or constructor). If it is enabled for an
+entire class, it can be selectively disabled at the method level by annotation the method and passing
+`TypeCheckingMode.SKIP` to it.
+
+[source,groovy]
+----
+@TypeChecked
+class MyClass {
+    def typeCheckedMethod() {
+        // type checked
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    def notTypeCheckedMethod() {
+        // no type checking
+    }
+}
+----
 
 === General Recommendations
 

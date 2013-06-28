@@ -4,6 +4,7 @@ import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import groovy.transform.TypeChecked
+import groovy.transform.TypeCheckingMode
 import spock.lang.Specification
 
 import static java.util.Calendar.DAY_OF_MONTH
@@ -61,8 +62,9 @@ class ClassSpec extends Specification {
     }
 
     @ToString
+//    @CompileStatic
+    @TypeChecked
     @EqualsAndHashCode
-    // tag::PersonClass[]
     static class Person {
         String firstName
         String lastName
@@ -89,7 +91,10 @@ class ClassSpec extends Specification {
         }
 
 
+//        @TypeChecked(TypeCheckingMode.PASS)
+        @CompileStatic
         static Person createPersonMapProperties(Map props) {
+//            props.badMethod()
             new Person(props)
             // functionally the same as the "normal" constructor-properties form, however the
             //   compiler does not have the opportunity to optimize out the property calls
@@ -108,14 +113,7 @@ class ClassSpec extends Specification {
             // functionally the same as `new Person(fn, ln)`
         }
 
-        @TypeChecked
-        def m() {
-            final aValue = 'This is a value'
-            Number num = aValue   // Compiler error
-            println "Does not work; compiler error: ${aValu}"
-        }
     }
-    // end::PersonClass[]
 
 
     def 'default constructors'() {
