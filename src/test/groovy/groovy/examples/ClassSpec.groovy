@@ -1,5 +1,6 @@
 package groovy.examples
 
+import groovy.json.JsonBuilder
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
@@ -99,6 +100,7 @@ class ClassSpec extends Specification {
             // functionally the same as the "normal" constructor-properties form, however the
             //   compiler does not have the opportunity to optimize out the property calls
             // This is NOT allowed when using @CompileStatic in Groovy 2.1
+JsonBuilder
         }
 
         static Person createPersonListParams(String fn, String ln) {

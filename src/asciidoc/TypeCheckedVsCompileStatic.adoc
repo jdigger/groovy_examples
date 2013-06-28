@@ -1,5 +1,10 @@
 == @TypeChecked vs @CompileStatic
 
+=== Summary
+
+Unless there is a very good reason not to, *ALWAYS* use one of these two annotations. It can mean a little more
+typing (both in the keyboard and classes sense), but it's well worth it for the additional clarity and tools support.
+
 === What They Do
 
 ==== @TypeChecked
@@ -80,6 +85,22 @@ def typeCheckedMethod() {
 
 === General Recommendations
 
-IMPORTANT: Unless there is a very good reason not to, *ALWAYS* use one of these two annotations.
+Ideally, if you are not using static type checking of some kind, mark the class/method with
+@TypeChecked(TypeCheckingMode.SKIP) to make it clear that it wasn't just an oversight.
 
-http://mrhaki.blogspot.com/2013/05/groovy-goodness-delegatesto-for-type.html
+Some of the times when you can not do so:
+* When using one of the "builders" (e.g., http://groovy.codehaus.org/gapi/groovy/json/JsonBuilder.html[JsonBuilder])
+* When using a dynamic integration library (e.g., https://github.com/jwagenleitner/groovy-wslite[Groovy-WSLite])
+* Some DSLs
+  ** Fortunately, http://mrhaki.blogspot.com/2013/05/groovy-goodness-delegatesto-for-type.html[@DelegatesTo] reduces
+     the need for this.
+* ...?
+
+When all you're doing is essentially "Java with a much nicer syntax", @CompileStatic is a great choice. You then
+have both Java's type safety and its performance. Since @CompileStatic even works for most uses of closures,
+you even get pretty much all of what Java 8 is promising, long before it's generally available.
+
+As a general rule, though, it's usually best to "let Groovy be Groovy" and use the @TypeChecked. That way all the
+runtime semantics of Groovy remain the same. There is a performance cost to that (compared to @CompileStatic) but
+it is generally relatively minor, and getting much better over time. (Java 7, in particular, makes things much better
+because of it's "invokedynamic" bytecode support.)
