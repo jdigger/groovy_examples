@@ -62,8 +62,8 @@ class ClassSpec extends Specification {
     }
 
     @ToString
-//    @CompileStatic
-    @TypeChecked
+    @CompileStatic
+//    @TypeChecked
     @EqualsAndHashCode
     static class Person {
         String firstName
@@ -91,8 +91,8 @@ class ClassSpec extends Specification {
         }
 
 
-//        @TypeChecked(TypeCheckingMode.PASS)
-        @CompileStatic
+        @TypeChecked(TypeCheckingMode.PASS)
+        @CompileStatic(TypeCheckingMode.SKIP)
         static Person createPersonMapProperties(Map props) {
 //            props.badMethod()
             new Person(props)
