@@ -3,6 +3,7 @@ package groovy.examples
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+import groovy.transform.TypeChecked
 import spock.lang.Specification
 
 import static java.util.Calendar.DAY_OF_MONTH
@@ -105,6 +106,13 @@ class ClassSpec extends Specification {
             // the left-hand-side (in this case, what the method returns), does an
             //   implicit coercion like the 'as Person' does.
             // functionally the same as `new Person(fn, ln)`
+        }
+
+        @TypeChecked
+        def m() {
+            final aValue = 'This is a value'
+            Number num = aValue   // Compiler error
+            println "Does not work; compiler error: ${aValu}"
         }
     }
     // end::PersonClass[]

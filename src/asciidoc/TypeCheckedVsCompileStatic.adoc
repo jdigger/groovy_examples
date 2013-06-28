@@ -4,19 +4,42 @@
 
 ==== @TypeChecked
 
-This tells to Groovy compiler to do the same kind of type checking that the Java compiler does.
+This tells the Groovy compiler to do the same kind of type checking that the Java compiler does.
 
-In other words, it makes
+In other words, it makes typos, changes in method signatures, etc. all compiler errors.
 
 [source,groovy]
 ----
 final aValue = 'This is a value'
 Number num = aValue   // Compiler error
 println "Does not work; compiler error: ${aValu}"
-
-include::../test/groovy/groovy/examples/ClassSpec.groovy[tags=PersonClass]
 ----
 
+As long as you aren't doing things that require `methodMissing` or the like (e.g., builders), you get all the
+wonderfulness of Groovy *and* compiler type safety.
+
+This makes *NO* difference in the resulting bytecode compared to not using the annotation. The semantics of
+how Groovy works (including dynamic method dispatch) work exactly the same as "unadorned" Groovy code. This
+simply asks the compiler to tell you when you make a mistake that the type system can catch.
+
+The annotation can be applied to an entire class or a specific method (or constructor). If it is enabled for an
+entire class, it can be selectively disabled at the method level by annotation the method and passing
+`TypeCheckingMode.SKIP` to it.
+
+[source,groovy]
+----
+@TypeChecked
+class MyClass {
+    def typeCheckedMethod() {
+        // type checked
+    }
+
+    @TypeChecked(TypeCheckingMode.SKIP)
+    def notTypeCheckedMethod() {
+        // no type checking
+    }
+}
+----
 
 ==== @CompileStatic
 
