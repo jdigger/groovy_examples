@@ -59,6 +59,63 @@ class ClosureSpec extends Specification {
     }
 
 
+    def 'lexical scoping: changing outer context'() {
+        given:
+        def a = 1
+        Closure b = { a++ }
+
+        expect:
+        a == 1  // `a` has not changed yet
+
+        when:
+        b()
+
+        then:
+        a == 2  // `b` caused the value of `a` in its outer context to change
+    }
+
+
+    def 'lexical scoping: how it is implemented'() {
+        given:
+        int a = 14
+        Closure b = { a++ }
+
+        // The Groovy compiler creates a subclass of Closure that looks *roughly* like this:
+        //
+        // class Closure_1 extends Closure {
+        //     private Reference<Integer> a
+        //     Closure_1(int a, Object owner) {
+        //         this.a = new Reference(a)
+        //         this.owner = owner
+        //     }
+        //     def doCall() { int c = a.get(); c++; a.set(c) }
+        // }
+        //
+        // and the above is converted into
+        //   Closure b = new Closure_1(a, this)
+
+        when:
+        Reference aRef = b.@a  // you can get to the private field created
+                               // by the compiler to hold the context of the Closure
+
+        then:
+        aRef.get() == 14
+
+        when:
+        b()
+
+        then:
+        aRef.get() == 15
+
+        when:
+        a++
+
+        then:
+        aRef.get() == a
+        aRef.get() == 16
+    }
+
+
     def 'late evaluation'() {
         given:
         def a = 1
