@@ -12,7 +12,7 @@ import spock.lang.Specification
  */
 @Category(Specification)
 class MetaClassMixin {
-    Map<Class, MetaClass> savedMetaClasses = [:]
+    static Map<Class, MetaClass> savedMetaClasses = [:]
 
     static void myCleanup(Specification specification) {
         println "MetaClassMixin.cleanup"
