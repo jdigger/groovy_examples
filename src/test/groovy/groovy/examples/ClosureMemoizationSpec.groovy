@@ -3,9 +3,9 @@ package groovy.examples
 import spock.lang.Specification
 
 @SuppressWarnings("GroovyUntypedAccess")
-class ClosureMemonizationSpec extends Specification {
+class ClosureMemoizationSpec extends Specification {
 
-    def 'closure no memonization'() {
+    def 'closure no memoization'() {
         given:
         int counter = 0
         final calculation = {counter++; it + 2}
@@ -19,7 +19,7 @@ class ClosureMemonizationSpec extends Specification {
     }
 
 
-    def 'closure with memonization'() {
+    def 'closure with memoization'() {
         given:
         int counter = 0
         final calculation = {counter++; it + 2}.memoize()
